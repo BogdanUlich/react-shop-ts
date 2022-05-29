@@ -1,0 +1,45 @@
+.footer {
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  border-top: 1px solid $brand-gray;
+  &__container {
+    padding: 20px 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 15px;
+  }
+  &__links {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+  }
+  &__link {
+    color: $text-gray !important;
+    font-size: 17px;
+    text-decoration: none;
+    &:hover {
+      color: $brand-black !important;
+    }
+  }
+  &__text {
+    color: $text-gray;
+    max-width: 700px;
+    text-align: center;
+  }
+  &__icons {
+    display: flex;
+    gap: 15px;
+    font-size: 29px;
+  }
+  &__icon {
+    &_telegram {
+      color: #28a8e9 !important;
+    }
+    &_instagram {
+      color: #eb4966 !important;
+    }
+  }
+}

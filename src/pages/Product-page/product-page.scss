@@ -1,0 +1,159 @@
+.product-page {
+  padding: 100px 0 208px;
+  @media (max-width: 768px) {
+    padding: 90px 0 208px;
+  }
+  @media (max-width: 576px) {
+    padding: 85px 0 208px;
+  }
+  &__container {
+    position: relative;
+  }
+}
+.product {
+  color: $brand-black;
+  display: flex;
+  gap: 30px;
+  &__img-md {
+    display: none;
+    img {
+      max-width: 100%;
+    }
+    @media (max-width: 768px) {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+  }
+  &__column {
+    &:first-child {
+      flex: 1 1 70%;
+    }
+    &:last-child {
+      flex: 1 0 30%;
+    }
+  }
+  &__wrapper {
+    display: flex;
+    gap: 15px;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 25px;
+    @media (max-width: 768px) {
+      display: none;
+    }
+  }
+  &__img {
+    max-width: 570px;
+    max-height: 480px;
+  }
+  &__preview-wrapper {
+    display: flex;
+    gap: 20px;
+  }
+  &__preview {
+    width: 120px;
+    height: 120px;
+    border-radius: 8px;
+    padding: 10px;
+    border: 1px solid $brand-black;
+  }
+  &__description {
+    display: flex;
+    flex-direction: column;
+    gap: 25px;
+    p {
+      margin: 0;
+      line-height: 25px;
+    }
+    &-title {
+      font-size: 20px;
+      font-weight: 600;
+      margin-bottom: 10px;
+    }
+    &-list {
+      margin: 0;
+      padding: 0;
+      list-style: none;
+    }
+    &-img {
+      border-radius: 10px;
+      width: 100%;
+      max-width: 750px;
+    }
+  }
+  &__info {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    position: sticky;
+    top: 65px;
+  }
+  &__name {
+    font-size: 26px;
+    margin: 0;
+    @media (max-width: 576px) {
+      font-size: 24px;
+      text-align: center;
+    }
+  }
+  &__code {
+    color: $text-gray;
+  }
+  &__price {
+    font-weight: 600;
+    font-size: 24px;
+  }
+  &__discount {
+    display: flex;
+    gap: 10px;
+  }
+  &__old-price {
+    text-decoration: line-through;
+    color: $text-gray;
+  }
+  &__label {
+    align-self: baseline;
+    padding: 4px 8px;
+    background: $label-success;
+    color: #fff;
+    border-radius: 6px;
+  }
+  &__amount {
+    font-weight: 600;
+    input {
+      padding: 5px;
+      background: #fff;
+      border: 1px solid $text-gray;
+      border-radius: 6px;
+      height: 40px;
+      width: 70px;
+      outline: 0;
+    }
+  }
+  &__btn {
+    font-size: 17px;
+    width: 85%;
+    @media (max-width: 768px) {
+      align-self: center;
+    }
+    @media (max-width: 576px) {
+      width: 100%;
+    }
+  }
+  @media (max-width: 768px) {
+    flex-direction: column-reverse;
+  }
+}
+.product-loading {
+  position: absolute;
+  top: 90%;
+  left: 50%;
+  transform: translateX(-50%);
+  img {
+    max-width: 150px;
+    @media (max-width: 576px) {
+      max-width: 100px;
+    }
+  }
+}

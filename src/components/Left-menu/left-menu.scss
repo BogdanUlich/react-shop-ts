@@ -1,0 +1,52 @@
+.left-menu {
+  background: #fff;
+  width: 300px;
+  height: 100%;
+  position: fixed;
+  z-index: 200;
+  top: 0;
+  left: -350px;
+  transition: all 0.3s linear;
+  padding: 0 15px;
+  overflow: auto;
+  &.active {
+    left: 0;
+  }
+  &__header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px 0;
+  }
+  &__logo {
+    color: $brand-black;
+    font-size: 22px;
+    text-decoration: none;
+  }
+  &__close {
+    cursor: pointer;
+    font-size: 17px;
+  }
+  &__body {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+  }
+  &__contacts {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+  }
+  &__link {
+    color: $brand-black;
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    font-size: 14px;
+    span {
+      color: $text-gray;
+      font-size: 18px;
+    }
+  }
+}
