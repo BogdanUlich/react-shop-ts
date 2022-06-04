@@ -1,0 +1,12 @@
+.scroll-top {
+  position: fixed;
+  bottom: -80px;
+  right: 20px;
+  font-size: 44px;
+  cursor: pointer;
+  z-index: 50;
+  transition: all 0.2s linear;
+  &.active {
+    bottom: 5px;
+  }
+}

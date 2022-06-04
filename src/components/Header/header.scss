@@ -56,11 +56,18 @@
     }
   } //header__menu
   &__logo {
-    font-size: 23px;
+    width: 100px;
+    height: 30px;
+    &-icon {
+      width: 100%;
+      max-height: 100%;
+      max-width: 100%;
+      object-fit: cover;
+    }
   }
   &__search {
     @media (max-width: 768px) {
-      display: none;
+      display: none !important;
     }
   } //header__search
   &__contacts {
@@ -69,76 +76,24 @@
     gap: 20px;
     align-items: center;
     &-link {
-      &:first-child {
-        .header__contacts-icon {
-          font-size: 26px;
-        }
-      }
+      height: 24px;
+      width: 24px;
+      overflow: hidden;
     }
     &-icon {
-      font-size: 28px;
-      color: $text-gray;
-      transition: 0.2s;
-      &:hover {
-        color: $brand-black;
-      }
+      max-width: 100%;
     }
     @media (max-width: 768px) {
       display: none;
     }
   } //header__contacts
-  &__numbers {
-    position: relative;
-    &-list {
-      display: none;
-      background: #fff;
-      z-index: 2;
-      border-radius: 8px;
-      box-shadow: 1px 1px 5px #afafaf;
-      position: absolute;
-      top: 30px;
-      left: -19px;
-      flex-direction: column;
-      align-items: center;
-      overflow: hidden;
-      &.open {
-        display: flex;
-      }
-      a {
-        padding: 6px 20px;
-        white-space: nowrap;
-        &:hover {
-          color: $brand-warning;
-          background: lighten($brand-warning, 40%);
-        }
-      }
-    }
-  }
-  &__number {
-    display: flex;
-    align-items: center;
-    gap: 7px;
-    &_label {
-      cursor: pointer;
-      &:hover {
-        color: $brand-warning;
-      }
-    }
-    &-icon {
-      font-size: 14px;
-      align-self: baseline;
-      &.open {
-        transform: rotate(180deg);
-        align-self: flex-end;
-      }
-    }
-  }
   &__cart {
     position: relative;
     height: 23px;
     width: 23px;
     &-icon {
-      font-size: 23px;
+      height: 25px;
+      width: 25px;
       color: $text-gray;
       transition: 0.2s;
       @media (max-width: 768px) {
@@ -156,8 +111,8 @@
       color: #fff;
       font-size: 11px;
       font-weight: 500;
-      top: -9px;
-      right: -13px;
+      top: -8px;
+      right: -10px;
       height: 17px;
       width: 17px;
       border-radius: 50%;
@@ -166,29 +121,5 @@
         display: flex;
       }
     }
-  }
-}
-
-.scroll-top {
-  position: fixed;
-  bottom: -60px;
-  right: 20px;
-  font-size: 44px;
-  cursor: pointer;
-  color: lighten($brand-black, 20%);
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 40px;
-  width: 40px;
-  background: #fff;
-  border-radius: 50%;
-  z-index: 50;
-  transition: all 0.2s linear;
-  &:hover {
-    color: $brand-black;
-  }
-  &.active {
-    bottom: 20px;
   }
 }

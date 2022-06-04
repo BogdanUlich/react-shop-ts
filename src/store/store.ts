@@ -1,25 +1,20 @@
-import { compose, applyMiddleware, createStore } from "redux";
-import thunk from "redux-thunk";
-import { persistStore, persistReducer } from "redux-persist";
-import storage from "redux-persist/lib/storage";
-import rootReducer from "./redusers";
+import { configureStore } from '@reduxjs/toolkit'
+import cart from './slices/cartSlice'
+import filters from './slices/filtersSlice'
+import leftMenu from './slices/leftMenuSlice'
+import products from './slices/productSlice'
+import categories from './slices/categoriesSlice'
 
-// @ts-ignore
-const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
+export const store = configureStore({
+  reducer: {
+    cart,
+    filters,
+    leftMenu,
+    products,
+    categories,
+  },
+})
 
-const persistConfig = {
-  key: "root",
-  storage,
-};
+export type RootState = ReturnType<typeof store.getState>
 
-const persistedReducer = persistReducer(persistConfig, rootReducer);
-
-export const store = createStore(
-  persistedReducer,
-  composeEnhancers(applyMiddleware(thunk))
-);
-
-// @ts-ignore
-window.store = store;
-
-export const persistor = persistStore(store);
+export type AppDispatch = typeof store.dispatch

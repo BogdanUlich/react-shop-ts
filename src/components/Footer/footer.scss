@@ -35,11 +35,10 @@
     font-size: 29px;
   }
   &__icon {
-    &_telegram {
-      color: #28a8e9 !important;
-    }
-    &_instagram {
-      color: #eb4966 !important;
+    width: 32px;
+    height: 32px;
+    img {
+      max-width: 100%;
     }
   }
 }

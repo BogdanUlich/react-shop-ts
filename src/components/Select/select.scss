@@ -1,0 +1,45 @@
+.sort {
+  position: relative;
+  &__label {
+    min-width: 220px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 5px;
+    span {
+      color: $brand-warning;
+      border-bottom: 1px dotted $brand-warning;
+    }
+  }
+  &__icon {
+    font-size: 14px;
+    align-self: baseline;
+    &.open {
+      transform: rotate(180deg);
+      align-self: flex-end;
+    }
+  }
+  &__popup {
+    background: #fff;
+    position: absolute;
+    z-index: 1;
+    right: 0px;
+    top: 30px;
+    border-radius: 8px;
+    box-shadow: 1px 1px 5px #afafaf;
+    overflow: hidden;
+  }
+  &__link {
+    padding: 5px 20px;
+    font-weight: 500;
+    cursor: pointer;
+    &.active {
+      background: lighten($brand-warning, 40%);
+      color: $brand-warning;
+    }
+    &:hover {
+      background: lighten($brand-warning, 40%);
+    }
+  }
+}

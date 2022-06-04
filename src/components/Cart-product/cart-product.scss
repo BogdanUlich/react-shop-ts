@@ -29,7 +29,8 @@
     }
     &-icon {
       cursor: pointer;
-      font-size: 14px;
+      height: 16px;
+      width: 16px;
       transition: all 0.1s;
       transform: scale(1.1);
       &:active {
@@ -39,8 +40,9 @@
   }
   &__delete {
     align-self: flex-start;
-    font-size: 16px;
     cursor: pointer;
+    height: 16px;
+    width: 16px;
   }
   @media (max-width: 768px) {
     justify-content: center;

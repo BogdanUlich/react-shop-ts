@@ -1,7 +1,6 @@
-import React from "react"
 import ContentLoader from "react-content-loader"
 
-function LoadingPreview() {
+const LoadingPreview = () => {
   return (
     <ContentLoader
       className="product-preview"
@@ -17,6 +16,7 @@ function LoadingPreview() {
       <rect x="111" y="480" rx="0" ry="0" width="1" height="1" />
       <rect x="50" y="412" rx="7" ry="7" width="200" height="14" />
       <rect x="75" y="448" rx="5" ry="5" width="150" height="6" />
+      //{" "}
     </ContentLoader>
   )
 }

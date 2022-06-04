@@ -1,27 +1,36 @@
-import { useEffect, FC } from "react";
-import { Link } from "react-router-dom";
-import { selectCategory } from "../../store/actions/category";
-import { fetchCategory } from "../../api";
-import LoadingPreview from "./Loading-preview";
-import { useAppDispatch, useAppSelector } from "../../hooks";
+import { useEffect, FC, LegacyRef } from "react"
+import { Link } from "react-router-dom"
+import LoadingPreview from "./Loading-preview"
+import { useAppDispatch, useAppSelector } from "../../hooks"
+import axios from "axios"
+import {
+  selectCategory,
+  setCategories,
+  setCategoryLoaded,
+} from "../../store/slices/categoriesSlice"
 
-type CategoriesType = {
-  categoriesRef: object;
-};
+interface CategoriesProps {
+  categoriesRef: LegacyRef<HTMLHeadingElement>
+}
 
-const Categories: FC<CategoriesType> = ({ categoriesRef }) => {
-  const dispatch = useAppDispatch();
+const Categories: FC<CategoriesProps> = ({ categoriesRef }) => {
+  const dispatch = useAppDispatch()
 
   useEffect(() => {
-    dispatch(fetchCategory());
-  }, []);
+    dispatch(setCategoryLoaded(false))
+    axios
+      .get("http://elfbar-shop/?action=getIndexCategories")
+      .then(function (response) {
+        dispatch(setCategories(response.data))
+      })
+  }, [])
 
-  const categories = useAppSelector((state) => state.category.items);
-  const isLoaded = useAppSelector((state) => state.category.isLoaded);
+  const categories = useAppSelector((state) => state.categories.items)
+  const isLoaded = useAppSelector((state) => state.categories.isLoaded)
 
   const onSelectCategory = (category: string) => {
-    dispatch(selectCategory(category));
-  };
+    dispatch(selectCategory(category))
+  }
   return (
     <section className="categories">
       <h2 ref={categoriesRef} className="main-title">
@@ -52,7 +61,7 @@ const Categories: FC<CategoriesType> = ({ categoriesRef }) => {
           : [...new Array(4)].map((_, index) => <LoadingPreview key={index} />)}
       </div>
     </section>
-  );
-};
+  )
+}
 
-export default Categories;
+export default Categories

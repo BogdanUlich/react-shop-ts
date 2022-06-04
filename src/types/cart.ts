@@ -1,45 +1,19 @@
-import { CartActionsTypes } from "../constants";
+import { PayloadAction } from '@reduxjs/toolkit'
 
 export interface CartState {
-  items: CartItem;
-  totalPrice: number;
-  totalCount: number;
+  items: CartItem[]
+  totalPrice: number
+  totalCount: number
 }
 
 export interface CartItem {
-  id: number;
-  name: string;
-  img: string;
-  actualPrice: number;
+  id: number
+  name: string
+  img: string
+  actualPrice: number
+  link: string
+  quantity: number
+  totalPrice: number
 }
 
-export interface AddItemToCartAction {
-  type: typeof CartActionsTypes.ADD_ITEM_TO_CART;
-  payload: object;
-}
-
-export interface RemoveCartItemAction {
-  type: typeof CartActionsTypes.REMOVE_CART_ITEM;
-  payload: number;
-}
-
-export interface PlusCartItemAction {
-  type: typeof CartActionsTypes.PLUS_CART_ITEM;
-  payload: number;
-}
-
-export interface MinusCartItemAction {
-  type: typeof CartActionsTypes.MINUS_CART_ITEM;
-  payload: number;
-}
-
-export interface ClearCartAction {
-  type: typeof CartActionsTypes.CLEAR_CART;
-}
-
-export type CartAction =
-  | AddItemToCartAction
-  | RemoveCartItemAction
-  | PlusCartItemAction
-  | MinusCartItemAction
-  | ClearCartAction;
+export type FindProductIndex = (state: CartState, action: PayloadAction<CartItem>) => number
