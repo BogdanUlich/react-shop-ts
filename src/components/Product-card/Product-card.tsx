@@ -22,12 +22,9 @@ const ProductCard: FC<ProductItem> = ({ available, name, actualPrice, oldPrice, 
         dispatch(addItemToCart(obj))
     }
 
-    const onClickProduct = (link: string) => {
-        dispatch(fetchProduct(link))
-    }
     return (
         <div className="product-card">
-            <Link to={`/product-page/${link}`} onClick={() => onClickProduct(link)} className="product-card__img">
+            <Link to={`/product-page/${link}`} className="product-card__img">
                 <img src={require('../../assets/img/products/' + img)} alt="" />
             </Link>
             <span className="product-card__description">

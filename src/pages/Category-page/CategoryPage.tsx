@@ -1,12 +1,13 @@
-import { useEffect } from 'react'
+import { useEffect, useRef } from 'react'
 import ProductCard from '../../components/Product-card/Product-card'
 import LoadingPreview from '../../components/Product-card/Loading-preview'
 import { useAppDispatch, useAppSelector } from '../../hooks'
-import { useParams } from 'react-router-dom'
-import { setProducts, setProductsLoaded } from '../../store/slices/productSlice'
-import axios from 'axios'
+import { useParams, useNavigate } from 'react-router-dom'
 import { Sortitem } from '../../types'
 import Select from '../../components/Select/Select'
+import qs from 'qs'
+import { setSortBy } from '../../store/slices/filtersSlice'
+import { fetchProducts } from '../../api'
 
 const CategoryPage = () => {
     const items = useAppSelector((state) => state.products.items)
@@ -15,31 +16,51 @@ const CategoryPage = () => {
     const isLoaded = useAppSelector((state) => state.products.isLoaded)
 
     const { id } = useParams()
+
     const categoryLink = category ? category : id
 
     const dispatch = useAppDispatch()
+    const navigate = useNavigate()
+
+    const sortByDidSet = useRef(false)
+
+    useEffect(() => {
+        const params = qs.parse(window.location.search.substring(1))
+
+        if (sortBy.type !== params.type || sortBy.order !== params.order) {
+            const urlSortBy = sortItems.find((obj) => {
+                return obj.type === params.type && obj.order === params.order
+            })
+            if (urlSortBy) {
+                dispatch(setSortBy(urlSortBy))
+            }
+        }
+
+        sortByDidSet.current = true
+    }, [])
+
+    useEffect(() => {
+        if (sortByDidSet) {
+            dispatch(fetchProducts(categoryLink, sortBy.type, sortBy.order))
+        }
+    }, [sortBy])
 
     useEffect(() => {
         window.scrollTo({ top: 0 })
-        dispatch(setProductsLoaded(false))
-        axios
-            .get(
-                'http://elfbar-shop/?action=getCategoryProducts&category=' +
-                    categoryLink +
-                    '&sort=' +
-                    sortBy.type +
-                    '&order=' +
-                    sortBy.order
-            )
-            .then(function (response) {
-                dispatch(setProducts(response.data))
-            })
+
+        const queryString = qs.stringify({
+            type: sortBy.type,
+            order: sortBy.order,
+        })
+
+        navigate(`?${queryString}`)
     }, [sortBy])
 
     const sortItems: Sortitem[] = [
         { name: 'популярности', type: 'rating', order: 'desc' },
         { name: 'наличию', type: 'available', order: 'desc' },
-        { name: 'цене', type: 'actualPrice', order: 'asc' },
+        { name: 'цене (от дешевых)', type: 'actualPrice', order: 'asc' },
+        { name: 'цене (от дорогих)', type: 'actualPrice', order: 'desc' },
         { name: 'алфавиту', type: 'name', order: 'asc' },
     ]
 

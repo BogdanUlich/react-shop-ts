@@ -3,6 +3,7 @@ import { useParams } from 'react-router-dom'
 import { fetchProduct } from '../../api'
 import loading from '../../assets/img/loading.gif'
 import { useAppDispatch, useAppSelector } from '../../hooks'
+import { addItemToCart } from '../../store/slices/cartSlice'
 
 const ProductPage = () => {
     const { id } = useParams()
@@ -18,12 +19,15 @@ const ProductPage = () => {
 
     const onAddToCart = () => {
         const obj = {
-            product: product.id,
+            id: product.id,
             name: product.name,
             img: product.img,
             actualPrice: product.actualPrice,
+            link: product.link,
+            quantity: 1,
+            totalPrice: product.actualPrice,
         }
-        // dispatch(addItemToCart(obj));
+        dispatch(addItemToCart(obj))
     }
 
     let discount = 100 - Math.floor((product.actualPrice * 100) / product.oldPrice)

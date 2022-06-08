@@ -5,6 +5,7 @@ const initialState: FiltersState = {
   sortBy: {
     type: 'rating',
     order: 'desc',
+    name: 'популярности',
   },
 }
 

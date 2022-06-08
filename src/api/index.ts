@@ -1,8 +1,5 @@
 import axios from 'axios'
-import { setProduct, setProductsLoaded } from '../store/slices/productSlice'
-// import { useAppDispatch } from "../hooks";
-
-// const dispatch = useAppDispatch();
+import { setProduct, setProducts, setProductsLoaded } from '../store/slices/productSlice'
 
 // CATEGORIES
 // export const fetchCategory = ()  => {
@@ -23,23 +20,14 @@ export const fetchProduct = (link: string | undefined) => (dispatch: any) => {
   })
 }
 
-// export const fetchProducts =
-//   (category: string, sortBy: sortBy) =>
-//   (dispatch: Dispatch<ProductsAction>) => {
-//     dispatch(setLoaded(false));
-//     axios
-//       .get(
-//         "http://elfbar-shop/?action=getCategoryProducts&category=" +
-//           category +
-//           "&sort=" +
-//           sortBy.type +
-//           "&order=" +
-//           sortBy.order
-//       )
-//       .then(function (response) {
-//         dispatch(setProducts(response.data));
-//       });
-//   };
+export const fetchProducts = (category: string | undefined, type: string, order: string) => (dispatch: any) => {
+  dispatch(setProductsLoaded(false))
+  axios
+    .get('http://elfbar-shop/?action=getCategoryProducts&category=' + category + '&sort=' + type + '&order=' + order)
+    .then(function (response) {
+      dispatch(setProducts(response.data))
+    })
+}
 
 // export const fetchPopularProducts =
 //   () => (dispatch: Dispatch<ProductsAction>) => {

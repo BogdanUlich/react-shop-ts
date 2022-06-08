@@ -4,6 +4,7 @@ import { useDispatch } from 'react-redux'
 import { Sortitem } from '../../types'
 import { setSortBy } from '../../store/slices/filtersSlice'
 import { sortBy } from '../../types/filters'
+import arrowDown from '../../assets/img/icons/arrow-down.svg'
 
 interface SelectProps {
     sortItems: Sortitem[]
@@ -12,7 +13,7 @@ interface SelectProps {
 
 const Select: FC<SelectProps> = ({ sortItems, activeSortType }) => {
     const activelabel = sortItems.find(function (obj) {
-        if (obj.type === activeSortType.type) {
+        if (obj.name === activeSortType.name) {
             return obj
         }
     })
@@ -23,8 +24,8 @@ const Select: FC<SelectProps> = ({ sortItems, activeSortType }) => {
 
     const dispatch = useDispatch()
 
-    const onSelectItem = (type: Sortitem) => {
-        dispatch(setSortBy(type))
+    const onSelectItem = (obj: Sortitem) => {
+        dispatch(setSortBy(obj))
         setVisiblePopup(false)
     }
 
@@ -50,16 +51,16 @@ const Select: FC<SelectProps> = ({ sortItems, activeSortType }) => {
     return (
         <div className="sort">
             <div className="sort__label" ref={sortRef} onClick={toggleVisiblePopup}>
-                <img src="" className={classNames('sort__icon', visiblePopup ? 'open' : '')} />
                 Сортировка по:<span>{activelabel ? activelabel.name : sortItems[0].name}</span>
+                <img src={arrowDown} className={classNames('sort__icon', visiblePopup ? 'open' : '')} />
             </div>
             {visiblePopup && (
                 <ul className="sort__popup">
                     {sortItems &&
                         sortItems.map((obj) => (
                             <li
-                                className={classNames('sort__link', activeSortType.type === obj.type ? 'active' : '')}
-                                key={`${obj.type}`}
+                                className={classNames('sort__link', activeSortType.name === obj.name ? 'active' : '')}
+                                key={`${obj.name}`}
                                 onClick={() => onSelectItem(obj)}
                             >
                                 {obj.name}

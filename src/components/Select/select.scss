@@ -13,11 +13,10 @@
     }
   }
   &__icon {
-    font-size: 14px;
-    align-self: baseline;
+    height: 12px;
+    width: 12px;
     &.open {
       transform: rotate(180deg);
-      align-self: flex-end;
     }
   }
   &__popup {
