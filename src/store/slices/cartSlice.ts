@@ -29,7 +29,7 @@ export const cartSlice = createSlice({
     plusCartItem: (state, action: PayloadAction<CartItem>) => {
       const productIndex = findProductIndex(state, action)
       state.items[productIndex].quantity += 1
-      state.items[productIndex].totalPrice += action.payload.totalPrice
+      state.items[productIndex].totalPrice += action.payload.actualPrice
       state.totalCount += 1
       state.totalPrice += action.payload.actualPrice
     },
@@ -45,6 +45,8 @@ export const cartSlice = createSlice({
     removeCartItem: (state, action: PayloadAction<CartItem>) => {
       const productIndex = findProductIndex(state, action)
       state.items.splice(productIndex, 1)
+      state.totalCount -= action.payload.quantity
+      state.totalPrice -= action.payload.totalPrice
     },
     clearCart: (state) => {
       state.items = initialState.items
