@@ -1,11 +1,10 @@
-import axios from 'axios'
 import { useEffect, useRef } from 'react'
 import ProductCard from '../../components/Product-card/Product-card'
 import LoadingPreview from '../../components/Product-card/Loading-preview'
 import { useAppDispatch, useAppSelector } from '../../hooks'
-import { setProducts, setProductsLoaded } from '../../store/slices/productSlice'
 import SimpleSlider from '../../components/Slider/Slick-slider'
 import Categories from '../../components/Categories/Categories'
+import { fetchPopularProducts } from '../../api'
 
 function Main() {
     const dispatch = useAppDispatch()
@@ -15,10 +14,7 @@ function Main() {
 
     useEffect(() => {
         window.scrollTo({ top: 0 })
-        dispatch(setProductsLoaded(false))
-        axios.get('http://elfbar-shop/?action=getPopularProducts').then(function (response) {
-            dispatch(setProducts(response.data))
-        })
+        dispatch(fetchPopularProducts())
     }, [])
 
     const categoriesRef = useRef<HTMLHeadingElement>(null!)

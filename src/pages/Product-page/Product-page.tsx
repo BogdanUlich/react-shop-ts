@@ -1,9 +1,12 @@
-import { useEffect } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { useParams } from 'react-router-dom'
 import { fetchProduct } from '../../api'
 import loading from '../../assets/img/loading.gif'
 import { useAppDispatch, useAppSelector } from '../../hooks'
 import { addItemToCart } from '../../store/slices/cartSlice'
+import plus from '../../assets/img/icons/plus-circle.svg'
+import minus from '../../assets/img/icons/minus-circle.svg'
+import classNames from 'classnames'
 
 const ProductPage = () => {
     const { id } = useParams()
@@ -15,7 +18,25 @@ const ProductPage = () => {
     useEffect(() => {
         window.scrollTo({ top: 0 })
         dispatch(fetchProduct(id))
-    }, [])
+    }, [id])
+
+    const [productAmount, setProductAmount] = useState(1)
+    const productAmountInput = useRef<HTMLInputElement>(null)
+
+    const onPlusItem = () => {
+        setProductAmount((prev) => prev + 1)
+    }
+    const onMinusItem = () => {
+        if (productAmount > 1) {
+            setProductAmount((prev) => prev - 1)
+        }
+    }
+
+    const onChangeAmount = (amount: any) => {
+        if (!isNaN(Number(amount))) {
+            setProductAmount(Number(productAmountInput.current?.value))
+        }
+    }
 
     const onAddToCart = () => {
         const obj = {
@@ -24,10 +45,12 @@ const ProductPage = () => {
             img: product.img,
             actualPrice: product.actualPrice,
             link: product.link,
-            quantity: 1,
-            totalPrice: product.actualPrice,
+            quantity: productAmount,
+            totalPrice: product.actualPrice * productAmount,
         }
-        dispatch(addItemToCart(obj))
+        if (productAmount > 0) {
+            dispatch(addItemToCart(obj))
+        }
     }
 
     let discount = 100 - Math.floor((product.actualPrice * 100) / product.oldPrice)
@@ -46,6 +69,7 @@ const ProductPage = () => {
                                     className="product__img"
                                 />
                             </div>
+
                             <div className="product__description">
                                 {product.description}
                                 <p>
@@ -53,11 +77,13 @@ const ProductPage = () => {
                                     tempora repellendus earum praesentium, modi officiis dolorum dolor iure, quo
                                     aspernatur iste minus nemo accusamus aut ratione expedita aliquam tempore.
                                 </p>
+
                                 <p>
                                     Lorem ipsum dolor sit amet consectetur adipisicing elit. Architecto obcaecati
                                     tempora repellendus earum praesentium, modi officiis dolorum dolor iure, quo
                                     aspernatur iste minus nemo accusamus aut ratione expedita aliquam tempore.
                                 </p>
+
                                 <ul className="product__description-list">
                                     <li className="product__description-title">Характеристики</li>
                                     <li>Lorem ipsum dolor sit amet consectetur adipisicing.</li>
@@ -67,10 +93,13 @@ const ProductPage = () => {
                                 </ul>
                             </div>
                         </div>
+
                         <div className="product__column">
                             <div className="product__info">
                                 <h1 className="product__name">{product.name}</h1>
+
                                 <div className="product__price">{product.actualPrice} грн.</div>
+
                                 {discount > 0 ? (
                                     <div className="product__discount">
                                         <div className="product__old-price">{product.oldPrice} грн.</div>
@@ -79,15 +108,48 @@ const ProductPage = () => {
                                 ) : (
                                     ''
                                 )}
+
                                 <div className="product__label">Новинка</div>
-                                {/* <div className="product__amount">
-                                Количество: <input type="text" placeholder="1" />
-                            </div> */}
-                                <button onClick={onAddToCart} className="product__btn btn-black">
+
+                                <div className="product__amount">
+                                    Количество:
+                                    <span className="product__amount-container">
+                                        <input
+                                            type="text"
+                                            className="product__amount-input"
+                                            value={productAmount}
+                                            ref={productAmountInput}
+                                            onChange={(e) => onChangeAmount(e.target.value)}
+                                        />
+
+                                        <img
+                                            src={plus}
+                                            alt=""
+                                            className="product__amount-btn product__amount-btn_plus"
+                                            onClick={onPlusItem}
+                                        />
+
+                                        <img
+                                            src={minus}
+                                            alt=""
+                                            className="product__amount-btn product__amount-btn_minus"
+                                            onClick={onMinusItem}
+                                        />
+                                    </span>
+                                </div>
+
+                                <button
+                                    onClick={onAddToCart}
+                                    className={classNames(
+                                        'product__btn btn-black',
+                                        productAmount < 1 ? 'disabled' : ''
+                                    )}
+                                >
                                     В корзину
                                 </button>
                             </div>
                         </div>
+
                         <div className="product__img-md">
                             <img alt="" src={require('../../assets/img/products/' + product.img)} />
                         </div>

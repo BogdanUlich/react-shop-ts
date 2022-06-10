@@ -15,7 +15,6 @@ type PropsType = {
     link: string
     totalPrice: number
 }
-
 const CartProduct: FC<PropsType> = (props) => {
     const dispatch = useDispatch()
 

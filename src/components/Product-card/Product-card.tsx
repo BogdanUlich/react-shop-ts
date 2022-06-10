@@ -1,7 +1,6 @@
 import classNames from 'classnames'
 import { FC } from 'react'
 import { Link } from 'react-router-dom'
-import { fetchProduct } from '../../api'
 import { useAppDispatch } from '../../hooks'
 import { addItemToCart } from '../../store/slices/cartSlice'
 import { ProductItem } from '../../types/products'
@@ -10,7 +9,7 @@ const ProductCard: FC<ProductItem> = ({ available, name, actualPrice, oldPrice, 
     const dispatch = useAppDispatch()
 
     const onAddToCart = () => {
-        const obj = {
+        const productItem = {
             id,
             name,
             img,
@@ -19,7 +18,7 @@ const ProductCard: FC<ProductItem> = ({ available, name, actualPrice, oldPrice, 
             quantity: 1,
             totalPrice: actualPrice,
         }
-        dispatch(addItemToCart(obj))
+        dispatch(addItemToCart(productItem))
     }
 
     return (

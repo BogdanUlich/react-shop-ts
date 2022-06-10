@@ -91,6 +91,7 @@ ul {
   }
   &.disabled {
     background: lighten($brand-black, 15%);
+    cursor: no-drop;
   }
 }
 

@@ -1,13 +1,13 @@
 import emptyCart from '../../assets/img/cart/empty-cart.png'
 import { Link } from 'react-router-dom'
-import { useEffect } from 'react'
+import { memo, useEffect } from 'react'
 import CheckoutForm from '../../components/Checkout-form/CheckoutForm'
 import { useAppDispatch, useAppSelector } from '../../hooks'
 import { clearCart } from '../../store/slices/cartSlice'
 import trahBasket from '../../assets/img/icons/trash-basket.svg'
 import CartProduct from '../../components/Cart-product/Cart-product'
 
-function Cart() {
+const Cart = () => {
     const dispatch = useAppDispatch()
 
     const onClearCart = () => {

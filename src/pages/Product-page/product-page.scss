@@ -121,7 +121,26 @@
   }
   &__amount {
     font-weight: 600;
-    input {
+    align-self: baseline;
+    &-container {
+      position: relative;
+    }
+    &-btn {
+      width: 17px;
+      height: 17px;
+      cursor: pointer;
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      &_plus {
+        right: 3px;
+      }
+      &_minus {
+        left: 3px;
+      }
+    }
+    &-input {
+      text-align: center;
       padding: 5px;
       background: #fff;
       border: 1px solid $text-gray;

@@ -17,3 +17,4 @@ export interface CartItem {
 }
 
 export type FindProductIndex = (state: CartState, action: PayloadAction<CartItem>) => number
+export type FindProduct = (state: CartState, action: PayloadAction<CartItem>) => CartItem | undefined

@@ -32,9 +32,7 @@ const Select: FC<SelectProps> = ({ sortItems, activeSortType }) => {
     useEffect(() => {
         document.body.addEventListener('click', closePopup)
 
-        return () => {
-            document.body.removeEventListener('click', closePopup)
-        }
+        return () => document.body.removeEventListener('click', closePopup)
     }, [])
 
     const closePopup = (event: any) => {
@@ -49,17 +47,17 @@ const Select: FC<SelectProps> = ({ sortItems, activeSortType }) => {
     }
 
     return (
-        <div className="sort">
-            <div className="sort__label" ref={sortRef} onClick={toggleVisiblePopup}>
+        <div className="select">
+            <div className="select__label" ref={sortRef} onClick={toggleVisiblePopup}>
                 Сортировка по:<span>{activelabel ? activelabel.name : sortItems[0].name}</span>
-                <img src={arrowDown} className={classNames('sort__icon', visiblePopup ? 'open' : '')} />
+                <img src={arrowDown} className={classNames('select__icon', visiblePopup ? 'open' : '')} />
             </div>
             {visiblePopup && (
-                <ul className="sort__popup">
+                <ul className="select__popup">
                     {sortItems &&
                         sortItems.map((obj) => (
                             <li
-                                className={classNames('sort__link', activeSortType.name === obj.name ? 'active' : '')}
+                                className={classNames('select__link', activeSortType.name === obj.name ? 'active' : '')}
                                 key={`${obj.name}`}
                                 onClick={() => onSelectItem(obj)}
                             >

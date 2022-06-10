@@ -1,15 +1,14 @@
 import axios from 'axios'
+import { setCategories, setCategoryLoaded } from '../store/slices/categoriesSlice'
 import { setProduct, setProducts, setProductsLoaded } from '../store/slices/productSlice'
 
 // CATEGORIES
-// export const fetchCategory = ()  => {
-//   dispatch(setCategoryLoaded(false));
-//   axios
-//     .get("http://elfbar-shop/?action=getIndexCategories")
-//     .then(function (response) {
-//       dispatch(setCategory(response.data));
-//     });
-// };
+export const fetchCategory = () => (dispatch: any) => {
+  dispatch(setCategoryLoaded(false))
+  axios.get('http://elfbar-shop/?action=getIndexCategories').then(function (response) {
+    dispatch(setCategories(response.data))
+  })
+}
 // CATEGORIES
 
 // PRODUCTS
@@ -29,15 +28,12 @@ export const fetchProducts = (category: string | undefined, type: string, order:
     })
 }
 
-// export const fetchPopularProducts =
-//   () => (dispatch: Dispatch<ProductsAction>) => {
-//     dispatch(setLoaded(false));
-//     axios
-//       .get("http://elfbar-shop/?action=getPopularProducts")
-//       .then(function (response) {
-//         dispatch(setProducts(response.data));
-//       });
-//   };
+export const fetchPopularProducts = () => (dispatch: any) => {
+  dispatch(setProductsLoaded(false))
+  axios.get('http://elfbar-shop/?action=getPopularProducts').then(function (response) {
+    dispatch(setProducts(response.data))
+  })
+}
 // // PRODUCTS
 
 // // CART

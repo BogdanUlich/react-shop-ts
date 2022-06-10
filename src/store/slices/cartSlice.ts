@@ -1,5 +1,5 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
-import { CartItem, CartState, FindProductIndex } from '../../types/cart'
+import { CartItem, CartState, FindProduct, FindProductIndex } from '../../types/cart'
 
 const initialState: CartState = {
   items: [],
@@ -7,8 +7,8 @@ const initialState: CartState = {
   totalCount: 0,
 }
 
-const findProductIndex: FindProductIndex = (state, action) => {
-  return state.items.findIndex((obj) => obj.id === action.payload.id)
+const findProduct: FindProduct = (state, action) => {
+  return state.items.find((obj) => obj.id === action.payload.id)
 }
 
 export const cartSlice = createSlice({
@@ -16,34 +16,42 @@ export const cartSlice = createSlice({
   initialState,
   reducers: {
     addItemToCart: (state, action: PayloadAction<CartItem>) => {
-      const productIndex = findProductIndex(state, action)
-      if (productIndex !== -1) {
-        state.items[productIndex].quantity += action.payload.quantity
-        state.items[productIndex].totalPrice = action.payload.totalPrice * action.payload.quantity
+      const product = findProduct(state, action)
+
+      if (product) {
+        product.quantity += action.payload.quantity
+        product.totalPrice += action.payload.totalPrice * action.payload.quantity
       } else {
         state.items.push(action.payload)
       }
+
       state.totalCount += action.payload.quantity
       state.totalPrice += action.payload.actualPrice * action.payload.quantity
     },
     plusCartItem: (state, action: PayloadAction<CartItem>) => {
-      const productIndex = findProductIndex(state, action)
-      state.items[productIndex].quantity += 1
-      state.items[productIndex].totalPrice += action.payload.actualPrice
+      const product = findProduct(state, action)
+
+      if (product) {
+        product.quantity += 1
+        product.totalPrice += action.payload.actualPrice
+      }
+
       state.totalCount += 1
       state.totalPrice += action.payload.actualPrice
     },
     minusCartItem: (state, action: PayloadAction<CartItem>) => {
-      const productIndex = findProductIndex(state, action)
-      if (state.items[productIndex].quantity > 1) {
-        state.items[productIndex].quantity -= 1
-        state.items[productIndex].totalPrice -= action.payload.actualPrice
+      const product = findProduct(state, action)
+
+      if (product && product.quantity > 1) {
+        product.quantity -= 1
+        product.totalPrice -= action.payload.actualPrice
         state.totalCount -= 1
         state.totalPrice -= action.payload.actualPrice
       }
     },
     removeCartItem: (state, action: PayloadAction<CartItem>) => {
-      const productIndex = findProductIndex(state, action)
+      const productIndex = state.items.findIndex((obj) => obj.id === action.payload.id)
+
       state.items.splice(productIndex, 1)
       state.totalCount -= action.payload.quantity
       state.totalPrice -= action.payload.totalPrice
