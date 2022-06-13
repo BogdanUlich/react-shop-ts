@@ -2,8 +2,10 @@ import { useEffect, FC, LegacyRef } from 'react'
 import { Link } from 'react-router-dom'
 import LoadingPreview from './Loading-preview'
 import { useAppDispatch, useAppSelector } from '../../hooks'
-import { selectCategory } from '../../store/slices/categoriesSlice'
-import { fetchCategory } from '../../api'
+import { categorySelector, fetchCategories, selectCategory } from '../../store/slices/categoriesSlice'
+import Modal from '../Modal-popup/Modal'
+import { CategoryItem } from '../../types/category'
+import fish from '../../assets/img/gifs/fish.gif'
 
 interface CategoriesProps {
     categoriesRef: LegacyRef<HTMLHeadingElement>
@@ -13,11 +15,10 @@ const Categories: FC<CategoriesProps> = ({ categoriesRef }) => {
     const dispatch = useAppDispatch()
 
     useEffect(() => {
-        dispatch(fetchCategory())
+        dispatch(fetchCategories())
     }, [])
 
-    const categories = useAppSelector((state) => state.categories.items)
-    const isLoaded = useAppSelector((state) => state.categories.isLoaded)
+    const { items, loading } = useAppSelector(categorySelector)
 
     const onSelectCategory = (category: string) => {
         dispatch(selectCategory(category))
@@ -27,9 +28,10 @@ const Categories: FC<CategoriesProps> = ({ categoriesRef }) => {
             <h2 ref={categoriesRef} className="main-title">
                 Каталог товаров
             </h2>
+
             <div className="categories__container container">
-                {isLoaded
-                    ? categories.map((obj) => (
+                {loading === 'success'
+                    ? items.map((obj: CategoryItem) => (
                           <Link
                               to={`/category-page/${obj.link}`}
                               className="category"
@@ -47,6 +49,11 @@ const Categories: FC<CategoriesProps> = ({ categoriesRef }) => {
                       ))
                     : [...new Array(4)].map((_, index) => <LoadingPreview key={index} />)}
             </div>
+
+            <Modal loading={loading}>
+                <img src={fish} alt="" className="img" />
+                <span>К сожалению, произошла ошибка загрузки информации. Попробуйте повторить попытку позже.</span>
+            </Modal>
         </section>
     )
 }

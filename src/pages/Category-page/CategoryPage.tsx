@@ -2,16 +2,17 @@ import { useEffect, useRef } from 'react'
 import ProductCard from '../../components/Product-card/Product-card'
 import LoadingPreview from '../../components/Product-card/Loading-preview'
 import { useAppDispatch, useAppSelector } from '../../hooks'
-import { useParams, useNavigate } from 'react-router-dom'
+import { useParams, useNavigate, useLocation } from 'react-router-dom'
 import { Sortitem } from '../../types'
 import Select from '../../components/Select/Select'
 import qs from 'qs'
 import { setSortBy } from '../../store/slices/filtersSlice'
 import { fetchProducts } from '../../api'
+import { categorySelector } from '../../store/slices/categoriesSlice'
 
 const CategoryPage = () => {
     const items = useAppSelector((state) => state.products.items)
-    const category = useAppSelector((state) => state.categories.category)
+    const { category } = useAppSelector(categorySelector)
     const sortBy = useAppSelector((state) => state.filters.sortBy)
     const isLoaded = useAppSelector((state) => state.products.isLoaded)
 
@@ -21,11 +22,12 @@ const CategoryPage = () => {
 
     const dispatch = useAppDispatch()
     const navigate = useNavigate()
+    const { search } = useLocation()
 
     const sortByDidSet = useRef(false)
 
     useEffect(() => {
-        const params = qs.parse(window.location.search.substring(1))
+        const params = qs.parse(search.substring(1))
 
         if (sortBy.type !== params.type || sortBy.order !== params.order) {
             const urlSortBy = sortItems.find((obj) => {

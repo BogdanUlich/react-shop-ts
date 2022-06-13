@@ -1,7 +1,7 @@
 export interface CategoriesState {
   items: Array<CategoryItem>
   category: null | string
-  isLoaded: boolean
+  loading: 'pending' | 'success' | 'error'
 }
 
 export interface CategoryItem {
