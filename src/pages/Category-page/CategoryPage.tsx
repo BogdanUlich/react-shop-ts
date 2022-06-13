@@ -16,9 +16,9 @@ const CategoryPage = () => {
     const sortBy = useAppSelector((state) => state.filters.sortBy)
     const isLoaded = useAppSelector((state) => state.products.isLoaded)
 
-    const { id } = useParams()
+    const { link } = useParams()
 
-    const categoryLink = category ? category : id
+    const categoryLink = category ? category : link
 
     const dispatch = useAppDispatch()
     const navigate = useNavigate()

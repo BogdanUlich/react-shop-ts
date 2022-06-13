@@ -9,7 +9,7 @@ import minus from '../../assets/img/icons/minus-circle.svg'
 import classNames from 'classnames'
 
 const ProductPage = () => {
-    const { id } = useParams()
+    const { link } = useParams()
     const dispatch = useAppDispatch()
 
     const isLoaded = useAppSelector((state) => state.products.isLoaded)
@@ -17,8 +17,8 @@ const ProductPage = () => {
 
     useEffect(() => {
         window.scrollTo({ top: 0 })
-        dispatch(fetchProduct(id))
-    }, [id])
+        dispatch(fetchProduct(link))
+    }, [link])
 
     const [productAmount, setProductAmount] = useState(1)
     const productAmountInput = useRef<HTMLInputElement>(null)
@@ -55,6 +55,18 @@ const ProductPage = () => {
 
     let discount = 100 - Math.floor((product.actualPrice * 100) / product.oldPrice)
     discount = discount < 0 ? 0 : discount
+
+    if (!product.id) {
+        return (
+            <div className="product-page">
+                <div className="product-page__container container">
+                    <div className="product-loading">
+                        <img src={loading} alt="loading" />
+                    </div>
+                </div>
+            </div>
+        )
+    }
 
     return (
         <div className="product-page">
@@ -112,7 +124,7 @@ const ProductPage = () => {
                                 <div className="product__label">Новинка</div>
 
                                 <div className="product__amount">
-                                    Количество:
+                                    <span>Количество:</span>
                                     <span className="product__amount-container">
                                         <input
                                             type="text"

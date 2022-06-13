@@ -2,17 +2,7 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 import { ProductItem, ProductState } from '../../types/products'
 
 const initialState: ProductState = {
-  item: {
-    name: '',
-    description: '',
-    id: 0,
-    link: '',
-    actualPrice: 0,
-    oldPrice: 0,
-    available: 0,
-    rating: 0,
-    img: '2329647605.jpg',
-  },
+  item: {} as ProductItem,
   items: [],
   isLoaded: false,
 }
