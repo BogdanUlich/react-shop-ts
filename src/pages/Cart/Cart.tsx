@@ -1,16 +1,16 @@
 import emptyCart from '../../assets/img/cart/empty-cart.png'
 import { Link } from 'react-router-dom'
-import { memo, useEffect } from 'react'
+import { FC, useEffect } from 'react'
 import CheckoutForm from '../../components/Checkout-form/CheckoutForm'
 import { useAppDispatch, useAppSelector } from '../../hooks'
 import { clearCart } from '../../store/slices/cartSlice'
 import trahBasket from '../../assets/img/icons/trash-basket.svg'
 import CartProduct from '../../components/Cart-product/Cart-product'
 
-const Cart = () => {
+const Cart: FC = () => {
     const dispatch = useAppDispatch()
 
-    const onClearCart = () => {
+    const onClearCart = (): void => {
         if (window.confirm('Вы действительно хотите очистить корзину?')) {
             dispatch(clearCart())
         }

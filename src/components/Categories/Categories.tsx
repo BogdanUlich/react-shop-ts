@@ -20,7 +20,7 @@ const Categories: FC<CategoriesProps> = ({ categoriesRef }) => {
 
     const { items, loading } = useAppSelector(categorySelector)
 
-    const onSelectCategory = (category: string) => {
+    const onSelectCategory = (category: string): void => {
         dispatch(selectCategory(category))
     }
     return (

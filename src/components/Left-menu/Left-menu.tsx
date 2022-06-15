@@ -6,12 +6,13 @@ import { useAppDispatch, useAppSelector } from '../../hooks'
 import classNames from 'classnames'
 import { setMenuVisibility } from '../../store/slices/leftMenuSlice'
 import SearchInput from '../Search-input/Search-input'
+import { FC } from 'react'
 
-const LeftMenu = () => {
+const LeftMenu: FC = () => {
     const dispatch = useAppDispatch()
     const visibleMenu = useAppSelector((state) => state.leftMenu.visibility)
 
-    const closemenu = () => {
+    const closemenu = (): void => {
         dispatch(setMenuVisibility(false))
     }
 

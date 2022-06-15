@@ -1,32 +1,33 @@
-import { useEffect, useRef, useState } from 'react'
+import { FC, useEffect, useRef, useState } from 'react'
 import { useParams } from 'react-router-dom'
-import { fetchProduct } from '../../api'
-import loading from '../../assets/img/loading.gif'
+import loadingGif from '../../assets/img/loading.gif'
 import { useAppDispatch, useAppSelector } from '../../hooks'
 import { addItemToCart } from '../../store/slices/cartSlice'
 import plus from '../../assets/img/icons/plus-circle.svg'
 import minus from '../../assets/img/icons/minus-circle.svg'
 import classNames from 'classnames'
+import { fetchProduct, productSelector } from '../../store/slices/productSlice'
+import { CartItem } from '../../types/cart'
 
-const ProductPage = () => {
+const ProductPage: FC = () => {
     const { link } = useParams()
     const dispatch = useAppDispatch()
 
-    const isLoaded = useAppSelector((state) => state.products.isLoaded)
-    const product = useAppSelector((state) => state.products.item)
+    const { loading, item } = useAppSelector(productSelector)
 
     useEffect(() => {
         window.scrollTo({ top: 0 })
         dispatch(fetchProduct(link))
     }, [link])
 
-    const [productAmount, setProductAmount] = useState(1)
+    const [productAmount, setProductAmount] = useState<number>(1)
     const productAmountInput = useRef<HTMLInputElement>(null)
 
-    const onPlusItem = () => {
+    const onPlusItem = (): void => {
         setProductAmount((prev) => prev + 1)
     }
-    const onMinusItem = () => {
+
+    const onMinusItem = (): void => {
         if (productAmount > 1) {
             setProductAmount((prev) => prev - 1)
         }
@@ -39,29 +40,29 @@ const ProductPage = () => {
     }
 
     const onAddToCart = () => {
-        const obj = {
-            id: product.id,
-            name: product.name,
-            img: product.img,
-            actualPrice: product.actualPrice,
-            link: product.link,
+        const obj: CartItem = {
+            id: item.id,
+            name: item.name,
+            img: item.img,
+            actualPrice: item.actualPrice,
+            link: item.link,
             quantity: productAmount,
-            totalPrice: product.actualPrice * productAmount,
+            totalPrice: item.actualPrice * productAmount,
         }
         if (productAmount > 0) {
             dispatch(addItemToCart(obj))
         }
     }
 
-    let discount = 100 - Math.floor((product.actualPrice * 100) / product.oldPrice)
+    let discount: number = 100 - Math.floor((item.actualPrice * 100) / item.oldPrice)
     discount = discount < 0 ? 0 : discount
 
-    if (!product.id) {
+    if (!item.id) {
         return (
             <div className="product-page">
                 <div className="product-page__container container">
                     <div className="product-loading">
-                        <img src={loading} alt="loading" />
+                        <img src={loadingGif} alt="loading" />
                     </div>
                 </div>
             </div>
@@ -71,19 +72,19 @@ const ProductPage = () => {
     return (
         <div className="product-page">
             <div className="product-page__container container">
-                {isLoaded ? (
+                {loading === 'success' ? (
                     <div className="product">
                         <div className="product__column">
                             <div className="product__wrapper">
                                 <img
                                     alt=""
-                                    src={require('../../assets/img/products/' + product.img)}
+                                    src={require('../../assets/img/products/' + item.img)}
                                     className="product__img"
                                 />
                             </div>
 
                             <div className="product__description">
-                                {product.description}
+                                {item.description}
                                 <p>
                                     Lorem ipsum dolor sit amet consectetur adipisicing elit. Architecto obcaecati
                                     tempora repellendus earum praesentium, modi officiis dolorum dolor iure, quo
@@ -108,13 +109,13 @@ const ProductPage = () => {
 
                         <div className="product__column">
                             <div className="product__info">
-                                <h1 className="product__name">{product.name}</h1>
+                                <h1 className="product__name">{item.name}</h1>
 
-                                <div className="product__price">{product.actualPrice} грн.</div>
+                                <div className="product__price">{item.actualPrice} грн.</div>
 
                                 {discount > 0 ? (
                                     <div className="product__discount">
-                                        <div className="product__old-price">{product.oldPrice} грн.</div>
+                                        <div className="product__old-price">{item.oldPrice} грн.</div>
                                         <div className="product__discount-value">Скидка {discount}%</div>
                                     </div>
                                 ) : (
@@ -163,12 +164,12 @@ const ProductPage = () => {
                         </div>
 
                         <div className="product__img-md">
-                            <img alt="" src={require('../../assets/img/products/' + product.img)} />
+                            <img alt="" src={require('../../assets/img/products/' + item.img)} />
                         </div>
                     </div>
                 ) : (
                     <div className="product-loading">
-                        <img src={loading} alt="loading" />
+                        <img src={loadingGif} alt="loading" />
                     </div>
                 )}
             </div>

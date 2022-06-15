@@ -1,33 +1,4 @@
 import axios from 'axios'
-import { setProduct, setProducts, setProductsLoaded } from '../store/slices/productSlice'
-
-// PRODUCTS
-export const fetchProduct = (link: string | undefined) => async (dispatch: any) => {
-  dispatch(setProductsLoaded(false))
-  const res = await axios.get('http://elfbar-shop/?action=getProduct&link=' + link)
-  try {
-    dispatch(setProduct(res.data))
-  } catch (err) {
-    console.log(err)
-  }
-}
-
-export const fetchProducts = (category: string | undefined, type: string, order: string) => (dispatch: any) => {
-  dispatch(setProductsLoaded(false))
-  axios
-    .get('http://elfbar-shop/?action=getCategoryProducts&category=' + category + '&sort=' + type + '&order=' + order)
-    .then(function (response) {
-      dispatch(setProducts(response.data))
-    })
-}
-
-export const fetchPopularProducts = () => (dispatch: any) => {
-  dispatch(setProductsLoaded(false))
-  axios.get('http://elfbar-shop/?action=getPopularProducts').then(function (response) {
-    dispatch(setProducts(response.data))
-  })
-}
-// PRODUCTS
 
 // CART
 export const fetchCities = (cityName: string) => {

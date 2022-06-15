@@ -1,7 +1,13 @@
 export interface ProductState {
   item: ProductItem
   items: ProductItem[]
-  isLoaded: boolean
+  loading: 'pending' | 'success' | 'error'
+}
+
+export interface fetchProductsParams {
+  category: string | undefined
+  type: string
+  order: string
 }
 
 export interface ProductItem {

@@ -14,7 +14,7 @@ interface SearchInputProps {
 const SearchInput: FC<SearchInputProps> = ({ className }) => {
     const [products, setProducts] = useState<ProductItem[]>([])
     const [visibleSearchList, setVisibleSearchList] = useState<boolean>(false)
-    const [inputValue, setInputValue] = useState('')
+    const [inputValue, setInputValue] = useState<string>('')
 
     const inputRef = useRef<HTMLInputElement>(null)
 
@@ -29,7 +29,7 @@ const SearchInput: FC<SearchInputProps> = ({ className }) => {
         []
     )
 
-    const onInputChange = (productName: string) => {
+    const onInputChange = (productName: string): void => {
         if (productName) {
             onInputUpdate(productName)
             toggleVisibleSearchList(true)
@@ -40,27 +40,27 @@ const SearchInput: FC<SearchInputProps> = ({ className }) => {
         }
     }
 
-    const onInputFocus = () => {
+    const onInputFocus = (): void => {
         if (products.length > 0) {
             setVisibleSearchList(true)
         }
     }
 
-    const clearInputValue = () => {
+    const clearInputValue = (): void => {
         setInputValue('')
         setProducts([])
         inputRef.current?.focus()
     }
 
-    const showProducts = (obj: any) => {
+    const showProducts = (obj: any): void => {
         obj ? setProducts(Object.values(obj)) : setProducts([])
     }
 
-    const toggleVisibleSearchList = (visible: boolean) => {
+    const toggleVisibleSearchList = (visible: boolean): void => {
         setVisibleSearchList(visible)
     }
 
-    const closeSearchList = (event: any) => {
+    const closeSearchList = (event: any): void => {
         const path = event.path || (event.composedPath && event.composedPath())
         if (!path.includes(inputRef.current)) {
             setVisibleSearchList(false)

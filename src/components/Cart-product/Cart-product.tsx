@@ -18,15 +18,15 @@ type PropsType = {
 const CartProduct: FC<PropsType> = (props) => {
     const dispatch = useDispatch()
 
-    const deleteProduct = () => {
+    const deleteProduct = (): void => {
         if (window.confirm('Удалить товар из корзины?')) {
             dispatch(removeCartItem(props))
         }
     }
-    const onPlusCartItem = () => {
+    const onPlusCartItem = (): void => {
         dispatch(plusCartItem(props))
     }
-    const onMinusCartItem = () => {
+    const onMinusCartItem = (): void => {
         dispatch(minusCartItem(props))
     }
 

@@ -8,6 +8,7 @@ import { setMenuVisibility } from '../../store/slices/leftMenuSlice'
 import SearchInput from '../Search-input/Search-input'
 import Dropdown from '../Dropdown/Dropdown'
 import classNames from 'classnames'
+import { FC } from 'react'
 
 const phoneNumbers: string[] = [
     '+380 (50) 300 00 00',
@@ -16,10 +17,10 @@ const phoneNumbers: string[] = [
     '+380 (50) 270 00 00',
 ]
 
-const Header = () => {
+const Header: FC = () => {
     const dispatch = useAppDispatch()
 
-    const openLeftMenu = () => {
+    const openLeftMenu = (): void => {
         dispatch(setMenuVisibility(true))
     }
 

@@ -24,7 +24,7 @@ const Select: FC<SelectProps> = ({ sortItems, activeSortType }) => {
 
     const dispatch = useDispatch()
 
-    const onSelectItem = (obj: Sortitem) => {
+    const onSelectItem = (obj: Sortitem): void => {
         dispatch(setSortBy(obj))
         setVisiblePopup(false)
     }
@@ -35,14 +35,14 @@ const Select: FC<SelectProps> = ({ sortItems, activeSortType }) => {
         return () => document.body.removeEventListener('click', closePopup)
     }, [])
 
-    const closePopup = (event: any) => {
+    const closePopup = (event: any): void => {
         const path = event.path || (event.composedPath && event.composedPath())
         if (!path.includes(sortRef.current)) {
             setVisiblePopup(false)
         }
     }
 
-    const toggleVisiblePopup = () => {
+    const toggleVisiblePopup = (): void => {
         setVisiblePopup(!visiblePopup)
     }
 

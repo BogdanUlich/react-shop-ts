@@ -18,11 +18,11 @@ const Dropdown: FC<DropdownProps> = ({ listItems, className }) => {
         return () => document.body.removeEventListener('click', closePopup)
     }, [])
 
-    const toggleVisiblePopup = () => {
+    const toggleVisiblePopup = (): void => {
         setVisiblePopup(!visiblePopup)
     }
 
-    const closePopup = (event: any) => {
+    const closePopup = (event: any): void => {
         const path = event.path || (event.composedPath && event.composedPath())
         if (!path.includes(numRef.current)) {
             setVisiblePopup(false)

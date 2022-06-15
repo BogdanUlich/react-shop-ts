@@ -1,4 +1,4 @@
-import { useEffect, useRef } from 'react'
+import { FC, useEffect, useRef } from 'react'
 import ProductCard from '../../components/Product-card/Product-card'
 import LoadingPreview from '../../components/Product-card/Loading-preview'
 import { useAppDispatch, useAppSelector } from '../../hooks'
@@ -7,18 +7,18 @@ import { Sortitem } from '../../types'
 import Select from '../../components/Select/Select'
 import qs from 'qs'
 import { setSortBy } from '../../store/slices/filtersSlice'
-import { fetchProducts } from '../../api'
 import { categorySelector } from '../../store/slices/categoriesSlice'
+import { fetchProducts, productSelector } from '../../store/slices/productSlice'
+import { ProductItem } from '../../types/products'
 
-const CategoryPage = () => {
-    const items = useAppSelector((state) => state.products.items)
+const CategoryPage: FC = () => {
+    const { items, loading } = useAppSelector(productSelector)
     const { category } = useAppSelector(categorySelector)
     const sortBy = useAppSelector((state) => state.filters.sortBy)
-    const isLoaded = useAppSelector((state) => state.products.isLoaded)
 
     const { link } = useParams()
 
-    const categoryLink = category ? category : link
+    const categoryLink: string = category ? category : link
 
     const dispatch = useAppDispatch()
     const navigate = useNavigate()
@@ -43,7 +43,7 @@ const CategoryPage = () => {
 
     useEffect(() => {
         if (sortByDidSet) {
-            dispatch(fetchProducts(categoryLink, sortBy.type, sortBy.order))
+            dispatch(fetchProducts({ category: categoryLink, type: sortBy.type, order: sortBy.order }))
         }
     }, [sortBy])
 
@@ -74,8 +74,8 @@ const CategoryPage = () => {
                 </div>
 
                 <div className="category-page__body">
-                    {isLoaded
-                        ? items.map((obj) => <ProductCard key={obj.id} {...obj} />)
+                    {loading === 'success'
+                        ? items.map((obj: ProductItem) => <ProductCard key={obj.id} {...obj} />)
                         : [...new Array(8)].map((_, index) => <LoadingPreview key={index} />)}
                 </div>
             </div>
